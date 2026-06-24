@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CEK SIMULASI UAS</title>
+    <style>
+      body {
+        padding: 20px;
+        font-family: sans-serif;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+      }
+      input {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      .buttonForm {
+        display: flex;
+        gap: 10px;
+      }
+      nav {
+        background-color: rgb(89, 198, 234);
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+      }
+      .result {
+        background-color: rgb(201, 255, 156);
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+        display: none; /* Sembunyikan dulu */
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h1>CEK SIMULASI UAS</h1>
+    </nav>
+
+    <form id="transaction" onsubmit="showResult(event)">
+      <label for="customer_name">Nama Customer:</label>
+      <input type="text" placeholder="Silvet" id="customer_name" required />
+
+      <label for="product_name">Nama Product:</label>
+      <input type="text" placeholder="Asics Superblast" id="product_name" required />
+
+      <label for="price">Harga:</label>
+      <input type="number" min="0" placeholder="3000000" id="price" required />
+
+      <label for="qty">Jumlah pembelian:</label>
+      <input type="number" min="0" value="0" id="qty" required />
+
+      <div class="buttonForm">
+        <button
+          type="submit"
+          style="
+            background-color: rgb(22, 218, 22);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+          "
+        >
+          Submit
+        </button>
+        <button
+          type="button"
+          id="btn-reset"
+          style="
+            background-color: rgb(218, 60, 60);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+          "
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+
+    <div class="result" id="resultBox">
+      <h1>HASIL PERHITUNGAN</h1>
+      <p>Nama pembeli: <span id="display_name"></span></p>
+      <p>Nama product: <span id="display_product"></span></p>
+      <p>Total belanja: <span id="display_total"></span></p>
+      <p>Potongan: <span id="display_discount"></span></p>
+      <p>Total bayar: <span id="display_total_payment"></span></p>
+    </div>
+
+    <script>
+      const formTransaction = document.getElementById("transaction");
+      const customer_name = document.getElementById("customer_name");
+      const product_name = document.getElementById("product_name");
+      const price = document.getElementById("price");
+      const qty = document.getElementById("qty");
+      const tombolReset = document.getElementById("btn-reset");
+      const resultBox = document.getElementById("resultBox");
+
+      function showResult(event) {
+        event.preventDefault();
+        const total = Number(price.value) * Number(qty.value);
+        // const discount = total >= 400000 ? 50000 : 0;
+        let discount = 0;
+          if (total >= 400000) {
+              discount = 50000;
+          } else {
+              discount = 0;
+          }
+      
+    
+
+        document.getElementById("display_name").textContent =
+          customer_name.value;
+        document.getElementById("display_product").textContent =
+          product_name.value;
+        document.getElementById("display_total").textContent = total;
+        document.getElementById("display_discount").textContent = discount;
+        document.getElementById("display_total_payment").textContent =
+          total - discount;
+
+        resultBox.style.display = "block";
+      }
+
+      tombolReset.addEventListener("click", function () {
+        customer_name.value = "";
+        product_name.value = "";
+        price.value = "";
+        qty.value = "0";
+        document.getElementById("display_name").textContent = "";
+        document.getElementById("display_product").textContent = "";
+        document.getElementById("display_total").textContent = "";
+        document.getElementById("display_discount").textContent = "";
+        document.getElementById("display_total_payment").textContent = "";
+
+        resultBox.style.display = "none";
+      });
+    </script>
+  </body>
+</html>
